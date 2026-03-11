@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>引継ぎドキュメントシステム</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <!-- CodeMirror for XML source editing (served locally) -->
+  <link rel="stylesheet" href="/static/vendor/codemirror/codemirror.css" />
+  <link rel="stylesheet" href="/static/vendor/codemirror/material.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Header ──────────────────────────────────────────────────────────── -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">📋</span>
+        <h1>引継ぎドキュメントシステム</h1>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="search-input"
+               placeholder="全文検索（キーワードを入力）…" />
+        <button id="search-btn" class="btn btn-primary">🔍 検索</button>
+      </div>
+    </header>
+
+    <!-- ── Body ────────────────────────────────────────────────────────────── -->
+    <div class="body-layout">
+
+      <!-- Sidebar navigation -->
+      <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <span>ドキュメント一覧</span>
+          <button id="refresh-btn" class="icon-btn" title="フォルダを再読み込み">🔄</button>
+        </div>
+        <div id="nav-tree" class="nav-tree">
+          <p class="nav-empty">読み込み中…</p>
+        </div>
+      </nav>
+
+      <!-- Main content area -->
+      <main class="content" id="main-content">
+
+        <!-- Search results overlay -->
+        <div id="search-results" class="search-results" style="display:none">
+          <div class="search-results-header">
+            <span id="search-results-title">検索結果</span>
+            <button id="search-close-btn" class="icon-btn">✕</button>
+          </div>
+          <div id="search-results-body"></div>
+        </div>
+
+        <!-- Document toolbar (hidden until a doc is loaded) -->
+        <div id="doc-toolbar" class="doc-toolbar" style="display:none">
+          <span id="doc-title" class="doc-title"></span>
+          <div class="toolbar-actions">
+            <button id="view-tab-btn"   class="tab-btn active" data-tab="view">📊 ビュー</button>
+            <button id="xml-tab-btn"    class="tab-btn"        data-tab="xml">🗂️ XMLソース</button>
+            <button id="edit-toggle-btn" class="btn btn-secondary">✏️ 編集モード</button>
+            <button id="save-btn"        class="btn btn-success"  style="display:none">💾 保存</button>
+            <button id="export-btn"      class="btn btn-primary">⬇️ Excelエクスポート</button>
+          </div>
+        </div>
+
+        <!-- Spreadsheet view pane -->
+        <div id="view-pane" class="view-pane" style="display:none">
+          <div id="sheet-tabs" class="sheet-tabs"></div>
+          <div id="spreadsheet-container" class="spreadsheet-container"></div>
+        </div>
+
+        <!-- XML source editor pane -->
+        <div id="xml-pane" class="xml-pane" style="display:none">
+          <textarea id="xml-editor"></textarea>
+        </div>
+
+        <!-- Welcome screen -->
+        <div id="welcome" class="welcome">
+          <div class="welcome-inner">
+            <div class="welcome-icon">📂</div>
+            <h2>ドキュメントを選択してください</h2>
+            <p>左のナビゲーションから<strong>チーム → 作業コード → ドキュメント</strong>を選択するか、上の検索バーでキーワード検索してください。</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+  </div><!-- #app -->
+
+  <!-- CodeMirror JS (served locally) -->
+  <script src="/static/vendor/codemirror/codemirror.js"></script>
+  <script src="/static/vendor/codemirror/xml.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

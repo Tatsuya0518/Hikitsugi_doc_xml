@@ -1,0 +1,29 @@
+# Byte-compiled / optimized Python files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Flask instance / secrets
+instance/
+*.cfg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Cache: ignore generated XML but keep folder structure
+cache/*.xml
+cache/**/*.xml
+
+# Temporary export files
+/tmp/
