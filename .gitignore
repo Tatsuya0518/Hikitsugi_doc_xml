@@ -3,15 +3,6 @@ __pycache__/
 *.py[cod]
 *.pyo
 
-# Virtual environments
-venv/
-.venv/
-env/
-
-# Flask instance / secrets
-instance/
-*.cfg
-
 # OS
 .DS_Store
 Thumbs.db
@@ -20,6 +11,10 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Rust build artifacts
+/target/
+Cargo.lock
 
 # Cache: ignore generated XML but keep folder structure
 cache/*.xml

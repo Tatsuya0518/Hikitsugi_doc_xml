@@ -1,6 +1,7 @@
 # 引継ぎドキュメントシステム (Hikitsugi Doc XML)
 
-チームごとに蓄積されるExcel引継ぎドキュメントをブラウザで閲覧・検索・編集できるナレッジベースシステムです。
+チームごとに蓄積されるExcel引継ぎドキュメントをブラウザで閲覧・検索・編集できるナレッジベースシステムです。  
+バックエンドは **Rust / Axum** で実装されています。
 
 ## 機能
 
@@ -32,27 +33,43 @@ data/watch/
 
 ## セットアップ
 
-```bash
-# 依存ライブラリをインストール
-pip install -r requirements.txt
+### 必要なもの
 
-# サンプルデータを生成（オプション）
+- Rust toolchain 1.75 以上 ([rustup](https://rustup.rs/) でインストール)
+
+### ビルドと起動
+
+```bash
+# サンプルデータを生成（オプション・Python + openpyxl が必要）
 python3 create_sample_data.py
 
-# サーバーを起動
-python3 app.py
+# ビルド
+cargo build --release
+
+# サーバーを起動（ポート 5000）
+./target/release/hikitsugi-doc-xml
+
+# ポートを変更する場合
+PORT=8080 ./target/release/hikitsugi-doc-xml
 ```
 
 ブラウザで `http://localhost:5000` を開いてください。
 
+### 開発時の起動
+
+```bash
+RUST_LOG=debug cargo run
+```
+
 ## ファイル構成
 
 ```
-app.py                     # Flaskアプリケーション（APIルート）
-excel_converter.py         # Excel → XML 変換ロジック
-xml_exporter.py            # XML → Excel エクスポートロジック
-create_sample_data.py      # デモ用サンプルデータ生成スクリプト
-requirements.txt           # Python依存ライブラリ
+Cargo.toml                 # Rust依存ライブラリ
+src/
+  main.rs                  # Axum Webサーバー・APIルート
+  converter.rs             # Excel → XML 変換ロジック（xlsx ZIP解析）
+  exporter.rs              # XML → Excel エクスポートロジック
+create_sample_data.py      # デモ用サンプルデータ生成スクリプト（Python）
 data/watch/                # Excelファイルを配置するフォルダ
 cache/                     # 変換済みXMLのキャッシュ（自動生成）
 templates/index.html       # フロントエンドHTML（SPA）
@@ -83,4 +100,16 @@ Excelファイルは以下の情報を保持したカスタムXML形式で保存
 - 結合セル
 - 行の高さ・列の幅
 - 埋め込み画像（Base64エンコード）
+
+## 技術スタック
+
+| 役割 | ライブラリ |
+|------|----------|
+| Webフレームワーク | [Axum](https://github.com/tokio-rs/axum) 0.7 + Tokio |
+| 静的ファイル配信 | tower-http ServeDir |
+| xlsx解析 | zip 2 + quick-xml 0.36（ZIPアーカイブ直接解析）|
+| xlsxエクスポート | [rust_xlsxwriter](https://github.com/jmcnamara/rust_xlsxwriter) 0.68 |
+| JSONシリアライズ | serde + serde_json |
+| キャッシュ検証 | md5 |
+| 画像エンコード | base64 |
 
