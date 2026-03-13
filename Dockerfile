@@ -29,8 +29,6 @@ WORKDIR /app
 COPY --from=builder /app/target/release/hikitsugi-doc-xml /usr/local/bin/hikitsugi-doc-xml
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/templates ./templates
-COPY --from=builder /app/data ./data
-COPY --from=builder /app/cache ./cache
 
 ENV PORT=5000
 EXPOSE 5000
