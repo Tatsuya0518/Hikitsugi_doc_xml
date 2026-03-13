@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hikitsugi-doc-xml:latest
+    environment:
+      - PORT=5000
+      - RUST_LOG=info
+    ports:
+      - "${PORT:-5000}:5000"
+    volumes:
+      - ./data:/app/data
+      - ./cache:/app/cache
+      - ./templates:/app/templates
+      - ./static:/app/static
+    command: ["hikitsugi-doc-xml"]
