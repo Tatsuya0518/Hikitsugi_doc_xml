@@ -61,6 +61,22 @@ PORT=8080 ./target/release/hikitsugi-doc-xml
 RUST_LOG=debug cargo run
 ```
 
+### Docker Compose での起動（Codespaces 向け）
+
+Docker が利用できる環境（Codespaces も含む）では、同梱の `docker-compose.yaml` を使ってサーバーを起動できます。
+
+```bash
+# イメージをビルドして起動
+docker compose up --build
+
+# バックグラウンドで起動する場合
+docker compose up -d
+```
+
+- ポート: `http://localhost:5000`（環境変数 `PORT` で上書き可能）
+- `data`, `cache`, `templates`, `static` はホストのディレクトリをコンテナにマウントするため、Codespaces でもファイル編集が即時反映されます。
+- サンプルデータが必要な場合は、コンテナ起動前にホスト側で `python3 create_sample_data.py` を実行してください。
+
 ## ファイル構成
 
 ```
@@ -112,4 +128,3 @@ Excelファイルは以下の情報を保持したカスタムXML形式で保存
 | JSONシリアライズ | serde + serde_json |
 | キャッシュ検証 | md5 |
 | 画像エンコード | base64 |
-
