@@ -1,4 +1,4 @@
-FROM rust:1.75-slim AS builder
+FROM rust:slim AS builder
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -23,6 +23,9 @@ RUN apt-get update \
         libbz2-1.0 \
         liblzma5 \
         libzstd1 \
+        python3 \
+        python3-pip \
+        python3-openpyxl \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
